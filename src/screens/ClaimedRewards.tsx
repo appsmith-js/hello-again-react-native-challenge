@@ -1,11 +1,20 @@
 import React from 'react';
-import { FlatList, StatusBar, Text, View, StyleSheet } from 'react-native';
+import {
+  FlatList,
+  StatusBar,
+  Text,
+  View,
+  StyleSheet,
+  Platform,
+  Button,
+} from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import ClaimedRewardCard from '../components/ClaimedRewardCard';
 import { hs, ws } from '../utils/Metrics';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const ClaimedRewards = () => {
+const ClaimedRewards = ({navigation}:any) => {
   const collected = useSelector(
     (state: RootState) => state.collectedRewards.items,
   );
@@ -15,23 +24,21 @@ const ClaimedRewards = () => {
   );
 
   return (
-    <>
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar
         translucent
         backgroundColor="#FCF7F7"
         barStyle="dark-content"
       />
       <View style={styles.header}>
+        <Button title={'Go back'} onPress={()=>navigation.goBack()}/>
         <Text style={styles.headerText}>Total points {totalPoints}</Text>
+
       </View>
 
       <FlatList
         data={collected}
-        contentContainerStyle={{
-          padding: 16,
-          flexGrow: 1,
-          backgroundColor: '#FCF7F7',
-        }}
+        contentContainerStyle={styles.listContent}
         keyExtractor={item => item.id}
         renderItem={({ item }) => <ClaimedRewardCard reward={item} />}
         ListEmptyComponent={() => (
@@ -43,23 +50,30 @@ const ClaimedRewards = () => {
           </View>
         )}
       />
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#FCF7F7',
+  },
   header: {
     height: hs(60),
-    width: ws(390),
-    marginTop: StatusBar.currentHeight || 0,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginBottom: hs(12),
+    flexDirection:'row',
+
   },
   headerText: {
     fontSize: ws(16),
     fontFamily: 'Inter-SemiBold',
     color: '#333',
+  },
+  listContent: {
+    padding: 16,
+    flexGrow: 1,
   },
   emptyContainer: {
     flex: 1,

@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
   },
   header: {
     height: hs(60),
-    marginTop: StatusBar.currentHeight || 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

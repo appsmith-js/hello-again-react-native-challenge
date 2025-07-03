@@ -30,6 +30,7 @@ const ClaimedRewardCard = ({ reward }: { reward: any }) => {
 const styles = StyleSheet.create({
   container: {
     width: ws(358),
+    flex:1,
     backgroundColor: '#FFFFFF',
     borderRadius: ws(12),
     overflow: 'hidden',
